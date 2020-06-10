@@ -40,35 +40,35 @@ ParaView.
 
 5. To explore the advective case, there are some changes that should be made:
   
-  a. The boundary condition on `T` at the outlet patch should be `zeroGradient`.
+   a. The boundary condition on `T` at the outlet patch should be `zeroGradient`.
 
-  b. The diffusion coefficient in `constant/transportProperties` should be null.
+   b. The diffusion coefficient in `constant/transportProperties` should be null.
 
-  c. The `0/U` file should reflect an initial velocity of `(0.5 0 0)` in the
-  whole domain.
+   c. The `0/U` file should reflect an initial velocity of `(0.5 0 0)` in the
+   whole domain.
 
-  Run the case in that state; you should notice some oscillatory behaviour
-  around 0.25 seconds.
+   Run the case in that state; you should notice some oscillatory behaviour
+   around 0.25 seconds.
 
 6. From the previous question, we know that the advective term is causing
-  instabilities. To fix the situation, we can, for example, select a more 
-  "reliable" divergence schemes: In `system/fvSchemes`, pick 
-  `limitedLinear 0.2` as the scheme used for `divSchemes.div(phi, T)` entry.
+   instabilities. To fix the situation, we can, for example, select a more 
+   "reliable" divergence schemes: In `system/fvSchemes`, pick 
+   `limitedLinear 0.2` as the scheme used for `divSchemes.div(phi, T)` entry.
 
-  The 0.2 value represents "by how much we limit the linear scheme". a value
-  of 1 will result in no limitation.
+   The 0.2 value represents "by how much we limit the linear scheme". a value
+   of 1 will result in no limitation.
 
-  Run the simulation again and see for yourself if there is a stability gain.
+   Run the simulation again and see for yourself if there is a stability gain.
   
 7. Now to the diffusion case.
 
-  a. Make the velocity null initially and assign 0.1 to the diffusion
-  coefficient.
+   a. Make the velocity null initially and assign 0.1 to the diffusion
+   coefficient.
 
-  b. The laplacian term is approximated with `linear uncorrected` which is fine
-  because we don't need any corrections for such simple meshes. Correcting
-  operator approximations should be selected only in meshes with significant
-  non-orthogonality angles. Run the simulation and check if it runs smooth.
+   b. The laplacian term is approximated with `linear uncorrected` which is fine
+   because we don't need any corrections for such simple meshes. Correcting
+   operator approximations should be selected only in meshes with significant
+   non-orthogonality angles. Run the simulation and check if it runs smooth.
 
 ## Intermediate-level skills
 
