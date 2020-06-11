@@ -115,6 +115,8 @@ solvers add an interesting feature, called `fvOptions`.
 
 At this point, we lack the necessary post-processing skills to make anything
 useful from this script, but we'll learn those skills in no time!
+For now, you can figure out which scheme works best by going opening each case
+in ParaView and inspecting how the scheme performed.
 
 ## Advanced-level skills
 
