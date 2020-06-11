@@ -65,11 +65,57 @@ ParaView.
    a. Make the velocity null initially and assign 0.1 to the diffusion
    coefficient.
 
-   b. The laplacian term is approximated with `linear uncorrected` which is fine
+   b. The Laplacian term is approximated with `linear uncorrected` which is fine
    because we don't need any corrections for such simple meshes. Correcting
    operator approximations should be selected only in meshes with significant
    non-orthogonality angles. Run the simulation and check if it runs smooth.
 
 ## Intermediate-level skills
 
+The general transport equation is the elementary block of most OpenFOAM solvers;
+However, the equation we described in the lecture was the one used in the
+`scalarTransportFoam` from the Foam-Extend package. Recent Mainline OpenFOAM
+solvers add an interesting feature, called `fvOptions`.
+
+1. Take a look at the equation at 
+   [scalarTransportFoam.C, line 64 from OpenFOAM7 source code](https://github.com/OpenFOAM/OpenFOAM-7/blob/master/applications/solvers/basic/scalarTransportFoam/scalarTransportFoam.C#L62).
+   How its transport equation is different from what we described in the
+   lecture?
+
+> `fvOptions` is a framework to include "user-defined" source terms into
+> solved equation without re-compiling the solver.
+> We sacrificed this framework when we chose to work with Foam-Extend-4 in
+> this course. Because, it needs some programming experience, we will discuss
+> it in Part 2 of this course.
+
+2. Go back to our `adv-diff` case (from the basic-level section) and:
+   
+   a. Change the preconditioner for the numerical solver (Try diagonal, DILU,
+   ... etc) and note the number of iterations per timestep required for
+   convergence.
+
+   b. Get the case into that "pure-advective" state (null diffusivity)
+      then write a Shell script (Or a perl/Python script) that:
+      
+	  - Copies the case to a new directory multiple times
+	  - Changes `fvSchemes.divSchemes.div(phi,T)` in each new case. Use the 
+	    following (Gauss) schemes: linear, limitedLinear, filteredLinear and QUICK.
+		(You need to figure out how these schemes are used first).
+	  - Builds and checks the mesh
+	  - Runs the simulation
+
+> Hints for those who are new to Shell scripting:
+> - A shell script is a just a group of shell commands
+> - Execute `help for` in a BASH shell to figure out how looping is supposed to
+>   work.
+> - `cp -r` copies a directory
+> - `sed` is the most basic tool for "search-and-replace" operations on Unix
+>   files
+> - Then you can run OpenFOAM commands the usual way.
+
+At this point, we lack the necessary post-processing skills to make anything
+useful from this script, but we'll learn those skills in no time!
+
 ## Advanced-level skills
+
+No advanced-level questions until you complete the whole module.
